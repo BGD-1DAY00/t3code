@@ -127,6 +127,9 @@ function MediaVideoPlayerContent(props: MediaVideoPlayerProps) {
   const [playbackUri, setPlaybackUri] = useState<string | null>(props.expanded ? props.uri : null);
   // Keep an opened player mounted while signing or reconnecting temporarily has no usable URL.
   if (playbackUri === null && props.expanded && props.uri !== null) setPlaybackUri(props.uri);
+  const unavailableText = props.unavailableDetail
+    ? `Video unavailable. ${props.unavailableDetail}`
+    : "Video unavailable";
 
   return (
     <View
@@ -145,7 +148,9 @@ function MediaVideoPlayerContent(props: MediaVideoPlayerProps) {
         <MediaActionsMenu media={mediaActions} inModal={props.expanded} style={{ flex: 1 }}>
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel={`Play ${props.name}`}
+            accessibilityLabel={
+              props.unavailable ? `${props.name}. ${unavailableText}` : `Play ${props.name}`
+            }
             accessibilityHint={
               mediaActions.actions.length > 0 ? "Touch and hold for media actions" : undefined
             }
@@ -164,11 +169,7 @@ function MediaVideoPlayerContent(props: MediaVideoPlayerProps) {
               />
             ) : null}
             {props.unavailable ? (
-              <AppText className="text-center text-sm text-white/80">
-                {props.unavailableDetail
-                  ? `Video unavailable. ${props.unavailableDetail}`
-                  : "Video unavailable"}
-              </AppText>
+              <AppText className="text-center text-sm text-white/80">{unavailableText}</AppText>
             ) : props.uri === null ? (
               <AppActivityIndicator color="#ffffff" accessibilityLabel="Loading video" />
             ) : (

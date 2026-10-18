@@ -115,6 +115,7 @@ interface MediaVideoPlayerProps {
   readonly thumbnailKey: string;
   readonly thumbnailVisible?: boolean;
   readonly unavailable?: boolean;
+  readonly unavailableDetail?: string;
   readonly expanded?: boolean;
   readonly autoPlay?: boolean;
   readonly paused?: boolean;
@@ -163,7 +164,11 @@ function MediaVideoPlayerContent(props: MediaVideoPlayerProps) {
               />
             ) : null}
             {props.unavailable ? (
-              <AppText className="text-sm text-white/80">Video unavailable</AppText>
+              <AppText className="text-center text-sm text-white/80">
+                {props.unavailableDetail
+                  ? `Video unavailable. ${props.unavailableDetail}`
+                  : "Video unavailable"}
+              </AppText>
             ) : props.uri === null ? (
               <AppActivityIndicator color="#ffffff" accessibilityLabel="Loading video" />
             ) : (

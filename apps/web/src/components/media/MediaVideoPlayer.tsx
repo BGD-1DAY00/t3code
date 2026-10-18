@@ -139,7 +139,7 @@ export function MediaVideoPlayer({
             stateClassName,
           )}
         >
-          <span className="inline-flex items-center gap-1.5">
+          <span data-thread-find-ignore className="inline-flex items-center gap-1.5">
             <TriangleAlertIcon aria-hidden className="size-3.5 shrink-0" />
             {["Video unavailable", label, unavailableDetail].filter(Boolean).join(" · ")}
           </span>
